@@ -1,0 +1,18 @@
+cs:
+  chattycrow_label_settings: Chatty Crow nastavení notifikací
+  label_chatty_crow_host: Chatty Crow Host
+  label_chatty_crow_timeout: Timeout
+
+  # Channels
+  label_chatty_crow_general: Obecné
+  label_chatty_crow_channel_new: Nový kanál
+  label_chatty_crow_channel_edit: Upravit kanál
+  label_chatty_crow_channel_plural: Chatty Crow kanály
+  label_chatty_crow_application_token: Aplikační token
+  field_channel_type: Kanál
+  field_channel_token: Token
+  field_channel_active: Aktivní?
+
+  field_chatty_crow_issue_created: "Úkol byl vytvořen:"
+  field_chatty_crow_issue_updated: "Úkol byl aktualizován:"
+  field_chatty_crow_issue_update_author: "Autor aktualizace:"

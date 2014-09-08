@@ -1,0 +1,13 @@
+<%= error_messages_for 'chatty_crow_channel' %>
+
+<div class="box tabular">
+  <p>
+    <%= f.select :channel_type, RedmineChattyCrowNotifications::SERVICES.map { |m| [ m, m ] }, required: true %>
+  </p>
+  <p>
+    <%= f.text_field :channel_token, required: true %>
+  </p>
+  <p>
+    <%= f.check_box :active %>
+  </p>
+</div>

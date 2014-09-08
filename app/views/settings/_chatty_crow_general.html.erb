@@ -1,0 +1,20 @@
+<p>
+  <label>
+    <%= l(:label_chatty_crow_host) %> *
+  </label>
+  <%= text_field_tag 'settings[host]', @settings['host']  %>
+</p>
+
+<p>
+  <label>
+    <%= l(:label_chatty_crow_application_token) %> *
+  </label>
+  <%= text_field_tag 'settings[token]', @settings['token']  %>
+</p>
+
+<p>
+  <label>
+    <%= l(:label_chatty_crow_timeout) %> *
+  </label>
+  <%= text_field_tag 'settings[timeout]', @settings['timeout']  %>
+</p>

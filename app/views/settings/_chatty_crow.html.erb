@@ -1,0 +1,13 @@
+<% chattycrow_tabs = [
+      {
+        name: 'general', partial: 'settings/chatty_crow_general', label: :label_chatty_crow_general
+      },
+      {
+        name: 'channels', partial: 'settings/chatty_crow_channels', label: :label_chatty_crow_channel_plural
+      }
+   ]
+%>
+
+<%= render_tabs chattycrow_tabs %>
+
+<% html_title(l(:label_settings), l(:chatty_crow_label_settings)) -%>

@@ -1,4 +1,3 @@
-redmine_chattycrow_notification
-===============================
+Redmine ChattyCrow notifications
+================================
 
-Redmine chatty crow notification

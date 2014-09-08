@@ -1,0 +1,31 @@
+<div class="contextual">
+  <%= link_to l(:label_chatty_crow_channel_new), new_chatty_crow_channel_path, class: 'icon icon-add' %>
+</div>
+
+<h3><%= l(:label_chatty_crow_channel_plural) %></h3>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= l(:field_channel_type) %></th>
+      <th><%= l(:field_channel_token) %></th>
+      <th><%= l(:field_channel_active) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for type in ChattyCrowChannel.order("channel_type ASC").all %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td><%= type.channel_type %></td>
+        <td><%= type.channel_token %></td>
+        <td align="center" style="width:15%;">
+          <%= checked_image type.active? %>
+        </td>
+        <td class="buttons">
+          <%= link_to l(:button_edit), edit_chatty_crow_channel_path(type), class: 'icon icon-edit' %>
+          <%= link_to l(:button_delete), chatty_crow_channel_path(type), method: :delete, confirm: l(:text_are_you_sure), class: 'icon icon-del' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
