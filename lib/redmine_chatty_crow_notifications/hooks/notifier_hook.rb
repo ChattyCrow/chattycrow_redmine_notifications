@@ -131,6 +131,8 @@ module RedmineChattyCrowNotifications
           rescue TimeoutError
             # Dont sent, timeout!
             Rails.logger.info "[ChattyCrow] Timeout!"
+          rescue Exception => e
+            Rails.logger.info "[ChattyCrow] Exception: #{e.message}"
           end
         end
       end
