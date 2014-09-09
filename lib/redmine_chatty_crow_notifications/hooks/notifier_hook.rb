@@ -3,13 +3,12 @@ require 'chatty_crow'
 module RedmineChattyCrowNotifications
   module Hooks
     class NotifierHook < Redmine::Hook::Listener
-      #TODO: it is plans to rename hooks in upstream
       def controller_issues_new_after_save(context={})
         redmine_url = "#{Setting[:protocol]}://#{Setting[:host_name]}"
         issue = context[:issue]
 
         text = l(:field_chatty_crow_issue_created) + " ##{issue.id}\n\n"
-        text += l(:field_author) + ": #{issue.author.name}\n" 
+        text += l(:field_author) + ": #{issue.author.name}\n"
         text += l(:field_subject) + ": #{issue.subject}\n"
         text += l(:field_url) + ": #{redmine_url}/issues/#{issue.id}\n"
         text += l(:field_project) + ": #{issue.project}\n"
@@ -33,7 +32,7 @@ module RedmineChattyCrowNotifications
         if issue.status
           text += l(:field_status) + ": #{issue.status.name}\n"
         end
-        text += "\n\n#{issue.description}"
+        text += "\n#{issue.description}"
 
         deliver text, issue
       end
@@ -68,7 +67,7 @@ module RedmineChattyCrowNotifications
         if issue.status
           text += l(:field_status) + ": #{issue.status.name}\n"
         end
-        text += "\n\n#{journal.notes}"
+        text += "\n#{journal.notes}"
 
         deliver text, issue
       end
