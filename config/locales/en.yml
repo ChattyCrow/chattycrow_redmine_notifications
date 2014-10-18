@@ -1,6 +1,6 @@
 en:
   chattycrow_label_settings: Chatty Crow notification settings
-  label_chatty_crow_host: Chatty Crow Host
+  label_chatty_crow_host: Chatty Crow API URL
   label_chatty_crow_timeout: Timeout
 
   # Channels

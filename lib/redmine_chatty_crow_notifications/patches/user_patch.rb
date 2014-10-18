@@ -13,8 +13,8 @@ module RedmineChattyCrowNotifications
             # Get channel IDs for validation
             cc_channel_ids = ChattyCrowChannel.pluck(:id)
 
-            # Destroy all settings
-            chatty_crow_user_settings.destroy_all
+            # Destroy all old settings
+            ChattyCrowUserSetting.delete_all(user_id: self.id)
 
             # Create settings!
             s.each do |key, value|
