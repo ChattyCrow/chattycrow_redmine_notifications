@@ -12,7 +12,8 @@ en:
   field_channel_type: Channel
   field_channel_token: Token
   field_channel_active: Active
+  field_journal_notes: Journal notes
 
   field_chatty_crow_issue_created: "Issue was created:"
   field_chatty_crow_issue_updated: "Issue was updated:"
-  field_chatty_crow_issue_update_author: "Author of changes:"
+  field_chatty_crow_issue_update_author: "Author of changes"

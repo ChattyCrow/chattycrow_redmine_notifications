@@ -1,2 +1,2 @@
 source "https://rubygems.org"
-gem 'chatty_crow', github: 'netbrick/chattycrow_ruby'
+gem 'chatty_crow', '>= 1.3.1'

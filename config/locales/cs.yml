@@ -12,7 +12,8 @@ cs:
   field_channel_type: Kanál
   field_channel_token: Token
   field_channel_active: Aktivní?
+  field_journal_notes: Historie
 
   field_chatty_crow_issue_created: "Úkol byl vytvořen:"
   field_chatty_crow_issue_updated: "Úkol byl aktualizován:"
-  field_chatty_crow_issue_update_author: "Autor aktualizace:"
+  field_chatty_crow_issue_update_author: "Autor aktualizace"

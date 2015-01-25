@@ -10,5 +10,5 @@ require_dependency 'redmine_chatty_crow_notifications/hooks/notifier_hook'
 # Redmine modul
 module RedmineChattyCrowNotifications
   # List of available services!
-  SERVICES = %w(Jabber Skype Sms Ios Android HipChat)
+  SERVICES = %w(Jabber Skype Sms Ios Android HipChat Slack)
 end
