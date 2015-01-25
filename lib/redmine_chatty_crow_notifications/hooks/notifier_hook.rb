@@ -53,7 +53,7 @@ module RedmineChattyCrowNotifications
         colors = {
           'Low' => '#ffffff',
           'Normal' => 'good',
-          'Hight' => 'warning',
+          'High' => 'warning',
           'Urgent' => 'danger',
           'Immediate' => '#000000'
         }
