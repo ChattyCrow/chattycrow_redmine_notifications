@@ -176,8 +176,6 @@ module RedmineChattyCrowNotifications
           end
         end
 
-        byebug
-
         # Send notification
         begin
           Timeout::timeout(timeout) do
