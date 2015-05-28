@@ -42,7 +42,10 @@ module RedmineChattyCrowNotifications
         if issue.status
           text += l(:field_status) + ": #{issue.status.name}\n"
         end
-        text += "\n#{journal.notes}"
+
+        if journal
+          text += "\n#{journal.notes}"
+        end
       end
 
       def slack_message(type, context)
@@ -103,7 +106,9 @@ module RedmineChattyCrowNotifications
           fields << { title: l(:field_status), value: issue.status.name.to_s, short: true }
         end
 
-        fields << { title: l(:field_journal_notes), value: journal.notes, short: false }
+        if journal
+          fields << { title: l(:field_journal_notes), value: journal.notes, short: false }
+        end
 
         # Return
         payload[:attachments][0][:fields] = fields

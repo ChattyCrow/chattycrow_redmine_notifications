@@ -14,6 +14,6 @@ end
 
 # Redmine modul
 module RedmineChattyCrowNotifications
-  # List of available services!
-  SERVICES = %w(Jabber Skype Sms Ios Android HipChat Slack)
+  # List of available services from cc plugin
+  SERVICES = ChattyCrow::Request::BaseRequest.subclasses.map { |c| c.name.demodulize }
 end
