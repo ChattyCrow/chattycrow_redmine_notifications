@@ -2,10 +2,36 @@
 
 h1. ChattyCrow - Redmine
 
-!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications
+!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications !http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications.svg?branch=master!:http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications !https://codeclimate.com/repos/556794d56956803ead00051b/badges/f54013fb5f382145d971/gpa.svg!":https://codeclimate.com/repos/556794d56956803ead00051b/feed
 
 h2. Installation
 
 <pre>
-
+cd readmine_directory/plugins/
+git clone git@github.com:ChattyCrow/chattycrow_redmine_notifications.git
+bundle install
+rake redmine:plugins:migrate RAILS_ENV=production
 </pre>
+
+and restart redmine :)
+
+h2. Features
+
+h3. Sidekiq asynchronous sending
+
+Now you don't have to wait for our servers in redmine main thread, easily add Sidekiq to your redmine project. You can easilly add sidekiq plugin, start it and allow sidekiq in redmine chatty crow notification plugin settings.
+
+<pre>
+https://github.com/ogom/redmine_sidekiq
+</pre>
+
+and it's done :).
+
+h2. Changelog
+
+h3. 0.0.1
+
+* User settings for profile notifications
+* General settings server and token for notifications
+
+h2. Licence

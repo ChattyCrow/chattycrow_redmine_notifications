@@ -2,7 +2,7 @@
 
 <div class="box tabular">
   <p>
-    <%= f.select :channel_type, RedmineChattyCrowNotifications::SERVICES.map { |m| [ m, m ] }, required: true %>
+    <%= f.select :channel_type, RedmineChattyCrowNotifications::SERVICES.sort.map { |m| [ m, m ] }, required: true %>
   </p>
   <p>
     <%= f.text_field :channel_token, required: true %>

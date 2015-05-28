@@ -1,5 +1,12 @@
+# encoding: utf-8
+#
+# This file is a part of Redmine ChattyCrow notifictation
+#
+# @author Strnadj <jan.strnadek@gmail.com>
+
 require_dependency 'user'
 
+# Settings for user
 module RedmineChattyCrowNotifications
   module Patches
     module UserPatch
@@ -14,7 +21,7 @@ module RedmineChattyCrowNotifications
             cc_channel_ids = ChattyCrowChannel.pluck(:id)
 
             # Destroy all old settings
-            ChattyCrowUserSetting.delete_all(user_id: self.id)
+            ChattyCrowUserSetting.delete_all(user_id: id)
 
             # Create settings!
             s.each do |key, value|
@@ -23,7 +30,7 @@ module RedmineChattyCrowNotifications
 
               # Find channel!
               ChattyCrowUserSetting.create(
-                user_id: self.id,
+                user_id: id,
                 chatty_crow_channel_id: key,
                 contact: value
               )
@@ -32,7 +39,7 @@ module RedmineChattyCrowNotifications
 
           # Getter
           def chatty_crow_channel_settings
-            Hash[chatty_crow_user_settings.map { |m| [ m.chatty_crow_channel_id, m.contact ] }]
+            Hash[chatty_crow_user_settings.map { |m| [m.chatty_crow_channel_id, m.contact] }]
           end
         end
       end

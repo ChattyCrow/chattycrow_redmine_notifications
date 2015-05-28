@@ -6,6 +6,7 @@
 
 require File.expand_path('../../test_helper', __FILE__)
 
+# Test user settings for chatty crow notifications
 class UserSettingsPageTest < ActionController::TestCase
   tests ::MyController
 
@@ -39,5 +40,4 @@ class UserSettingsPageTest < ActionController::TestCase
       assert_select 'input', 1
     end
   end
-
 end

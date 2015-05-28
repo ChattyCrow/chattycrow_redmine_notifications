@@ -1,7 +1,6 @@
-source "https://rubygems.org"
-gem 'chatty_crow', '>= 1.3.1'
+source 'https://rubygems.org'
 
-gem 'sidekiq'
+gem 'chatty_crow', '>= 1.3.1'
 
 group :test do
   gem 'fakeweb'

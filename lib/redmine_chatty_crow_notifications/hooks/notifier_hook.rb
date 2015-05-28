@@ -1,8 +1,16 @@
+# encoding: utf-8
+#
+# This file is a part of Redmine ChattyCrow notifictation
+#
+# @author Strnadj <jan.strnadek@gmail.com>
+
+
 require 'chatty_crow'
 
 module RedmineChattyCrowNotifications
   module Hooks
     class NotifierHook < Redmine::Hook::Listener
+
       def redmine_url
         @redmine_url ||= "#{Setting[:protocol]}://#{Setting[:host_name]}"
       end
@@ -24,21 +32,27 @@ module RedmineChattyCrowNotifications
         text += l(:field_project) + ": #{issue.project}\n"
         text += l(:field_tracker) + ": #{issue.tracker.name}\n"
         text += l(:field_priority) + ": #{issue.priority.name}\n"
+
         if issue.assigned_to
           text += l(:field_assigned_to) + ": #{issue.assigned_to.name}\n"
         end
+
         if issue.start_date
-          text += l(:field_start_date) + ": #{issue.start_date.strftime("%d.%m.%Y")}\n"
+          text += l(:field_start_date) + ": #{issue.start_date.strftime('%d.%m.%Y')}\n"
         end
+
         if issue.due_date
-          text += l(:field_due_date) + ": #{issue.due_date.strftime("%d.%m.%Y")}\n"
+          text += l(:field_due_date) + ": #{issue.due_date.strftime('%d.%m.%Y')}\n"
         end
+
         if issue.estimated_hours
           text += l(:field_estimated_hours) + ": #{issue.estimated_hours} " + l(:field_hours) + "\n"
         end
+
         if issue.done_ratio
           text += l(:field_done_ratio) + ": #{issue.done_ratio}%\n"
         end
+
         if issue.status
           text += l(:field_status) + ": #{issue.status.name}\n"
         end
@@ -46,6 +60,8 @@ module RedmineChattyCrowNotifications
         if journal
           text += "\n#{journal.notes}"
         end
+
+        text
       end
 
       def slack_message(type, context)
@@ -65,7 +81,7 @@ module RedmineChattyCrowNotifications
           icon: ':bulb:',
           attachments: [{
             color: colors[issue.priority.name] || 'good',
-            fallback: text_message(type, context),
+            fallback: text_message(type, context)
           }]
         }
 
@@ -90,12 +106,15 @@ module RedmineChattyCrowNotifications
         if issue.assigned_to
           fields << { title: l(:field_assigned_to), value: issue.assigned_to.name.to_s, short: true }
         end
+
         if issue.start_date
-          fields << { title: l(:field_start_date), value: issue.start_date.strftime("%d.%m.%Y"), short: true }
+          fields << { title: l(:field_start_date), value: issue.start_date.strftime('%d.%m.%Y'), short: true }
         end
+
         if issue.due_date
-        fields << { title: l(:field_due_date), value: issue.due_date.strftime("%d.%m.%Y"), short: true }
+          fields << { title: l(:field_due_date), value: issue.due_date.strftime('%d.%m.%Y'), short: true }
         end
+
         if issue.estimated_hours
           fields << { title: l(:field_estimated_hours), value: "#{issue.estimated_hours} #{l(:field_hours)}", short: true }
         end
@@ -117,80 +136,62 @@ module RedmineChattyCrowNotifications
         payload
       end
 
-      def controller_issues_new_after_save(context={})
+      def sidekiq?
+        defined?(::Sidekiq) && Setting.plugin_redmine_chatty_crow_notifications['sidekiq'] == '1'
+      end
+
+      def controller_issues_new_after_save(context = {})
         deliver :new, context
       end
 
-      def controller_issues_edit_after_save(context={})
+      def controller_issues_edit_after_save(context = {})
         deliver :update, context
       end
 
       private
 
       def deliver(type, context)
-        # Get issue from context
-        issue = context[:issue]
-
-        # Get Application token
-        cc_config = Setting.plugin_redmine_chatty_crow_notifications
-
-        # Configure chatty crow
-        ChattyCrow.configure do |config|
-          config.host            = cc_config['host']
-          config.token           = cc_config['token']
-        end
+        # Get message data, this hash is serialized into sidekiq
+        # It needs to be a hash
+        data = {
+          'slack' => slack_message(type, context),
+          'normal' => text_message(type, context),
+          'channels' => {}
+        }
 
         # Get channels
-        channels = {}
         ChattyCrowChannel.active.each do |channel|
-          channels[channel.id] = {
-            contacts: [],
-            token: channel.channel_token,
-            type: channel.channel_type
+          data['channels'][channel.id] = {
+            'contacts' => [],
+            'token' => channel.channel_token,
+            'type' => channel.channel_type
           }
         end
 
-        # Prepare batch request
-        batch = ::ChattyCrow.create_batch(cc_config['token'])
+        # Get notification list users!
+        send = false
 
-        # Get notification list!
+        # Iterate over users
         User.active.includes(:chatty_crow_user_settings).each do |user|
           # Skip users dont care about issue changes
-          next if !user.notify_about?(issue)
+          # next if !user.notify_about?(context[:issue])
 
           # Find specific channels
           user.chatty_crow_user_settings.each do |user_setting|
-            channels[user_setting.chatty_crow_channel_id][:contacts] << user_setting.contact if user_setting.contact
+            if user_setting.contact
+              data['channels'][user_setting.chatty_crow_channel_id]['contacts'] << user_setting.contact
+              send = true
+            end
           end
         end
 
-        # Get timeout
-        timeout = cc_config['timeout'].to_i
-        timeout = 10 if timeout <= 0
-
-        # Sent to all channels (skip empty contacts)
-        channels.each_value do |channel|
-          # Skip empty
-          next if channel[:contacts].empty?
-
-          # Create notification
-          if channel[:type].downcase == 'slack'
-            batch.send("add_#{channel[:type].downcase}", slack_message(type, context).merge(channel: channel[:token], contacts: channel[:contacts]))
-          else
-            batch.send("add_#{channel[:type].downcase}", text_message(type, context), { channel: channel[:token], contacts: channel[:contacts] })
-          end
-        end
-
-        # Send notification
-        begin
-          Timeout::timeout(timeout) do
-            batch.execute!
-          end
-        rescue TimeoutError
-          # Dont sent, timeout!
-          Rails.logger.info "[ChattyCrow] Timeout!"
-        rescue Exception => e
-          Rails.logger.info "[ChattyCrow] Exception: #{e.message}"
+        # If sidekiq is available and allowed use it!
+        if !send # Dont send message (contacts are empty)
+          true
+        elsif sidekiq?
+          RedmineChattyCrowNotifications::Jobs::ChattyCrowJob.perform_async data
+        else
+          RedmineChattyCrowNotifications.send_notification data
         end
       end
     end

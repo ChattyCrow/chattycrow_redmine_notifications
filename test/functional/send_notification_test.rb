@@ -7,6 +7,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 require 'fakeweb'
 
+# Test send notification to user via chatty crow
 class SendNotificationTest < ActionController::TestCase
   tests ::IssuesController
 
@@ -29,13 +30,20 @@ class SendNotificationTest < ActionController::TestCase
     )
 
     # Settings for plugin override!
-    set = Setting.where(name: 'plugin_redmine_chatty_crow_notifications').first_or_create
-    set.value = {"host"=> CHATTY_CROW_API_URL, "token"=>CHATTY_CROW_TOKEN, "timeout"=>"30"}
+    set = Setting.where(name: 'plugin_redmine_chatty_crow_notifications')
+          .first_or_create
+
+    set.value = {
+      'host' => CHATTY_CROW_API_URL,
+      'token' => CHATTY_CROW_TOKEN,
+      'timeout' => '30'
+    }
+
     set.save!
   end
 
   def host
-    Setting.plugin_redmine_chatty_crow_notifications['host'] + 'batch'
+    Setting.plugin_redmine_chatty_crow_notifications['host'] + '/batch'
   end
 
   def mock_notification
@@ -48,7 +56,7 @@ class SendNotificationTest < ActionController::TestCase
           success: 1,
           total: 1,
           message_id: 1
-        },
+        }
       ]
     }
 
@@ -82,13 +90,16 @@ class SendNotificationTest < ActionController::TestCase
     # Mock ChattyCrow API
     mock_notification
 
-    # Create a new issue with watchers! (its part of code from issue controller test)
-    post :create, :project_id => 1,
-                  :issue => {:tracker_id => 1,
-                             :subject => 'This is a new issue with watchers',
-                             :description => 'This is the description',
-                             :priority_id => 5,
-                             :watcher_user_ids => ['2', '3']}
+    # Create a new issue with watchers!
+    # (its part of code from issue controller test)
+    post :create, project_id: 1,
+                  issue: {
+                    tracker_id: 1,
+                    subject: 'This is a new issue with watchers',
+                    description: 'This is the description',
+                    priority_id: 5,
+                    watcher_user_ids: %w(2 3)
+                  }
 
     # Test chatty crow api
     assert_equal last_headers['token'], CHATTY_CROW_TOKEN
@@ -104,13 +115,16 @@ class SendNotificationTest < ActionController::TestCase
     # Mock ChattyCrow API
     mock_notification
 
-    # Create a new issue with watchers! (its part of code from issue controller test)
-    post :create, :project_id => 1,
-                  :issue => {:tracker_id => 1,
-                             :subject => 'This is a new issue with watchers',
-                             :description => 'This is the description',
-                             :priority_id => 5,
-                             :watcher_user_ids => ['2', '3']}
+    # Create a new issue with watchers!
+    # (its part of code from issue controller test)
+    post :create, project_id: 1,
+                  issue: {
+                    tracker_id: 1,
+                    subject: 'This is a new issue with watchers',
+                    description: 'This is the description',
+                    priority_id: 5,
+                    watcher_user_ids: %w(2 3)
+                  }
 
     # Test chatty crow api
     assert_nil last_request
@@ -118,5 +132,4 @@ class SendNotificationTest < ActionController::TestCase
     # Remove mock
     clear_http_mocks
   end
-
 end
