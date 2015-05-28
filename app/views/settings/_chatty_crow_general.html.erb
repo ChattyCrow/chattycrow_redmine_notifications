@@ -2,19 +2,28 @@
   <label>
     <%= l(:label_chatty_crow_host) %> *
   </label>
-  <%= text_field_tag 'settings[host]', @settings['host']  %>
+  <%= text_field_tag 'settings[host]', @settings['host'], size: 50  %>
 </p>
 
 <p>
   <label>
     <%= l(:label_chatty_crow_application_token) %> *
   </label>
-  <%= text_field_tag 'settings[token]', @settings['token']  %>
+  <%= text_field_tag 'settings[token]', @settings['token'], size: 50  %>
 </p>
 
 <p>
   <label>
     <%= l(:label_chatty_crow_timeout) %> *
   </label>
-  <%= text_field_tag 'settings[timeout]', @settings['timeout']  %>
+  <%= text_field_tag 'settings[timeout]', @settings['timeout'], type: :number  %>
 </p>
+
+<% if defined?(::Sidekiq) %>
+  <p>
+    <label>
+      <%= l(:label_chatty_crow_sidekiq) %> *
+    </label>
+    <%= check_box_tag 'settings[sidekiq]', 1, @settings['sidekiq'] == '1'  %>
+  </p>
+<% end %>

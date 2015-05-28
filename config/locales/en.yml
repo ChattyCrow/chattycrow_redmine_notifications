@@ -2,6 +2,7 @@ en:
   chattycrow_label_settings: Chatty Crow notification settings
   label_chatty_crow_host: Chatty Crow API URL
   label_chatty_crow_timeout: Timeout
+  label_chatty_crow_sidekiq: Use sidekiq worker
 
   # Channels
   label_chatty_crow_general: General

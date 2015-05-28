@@ -1,3 +1,0 @@
-Redmine ChattyCrow notifications
-================================
-

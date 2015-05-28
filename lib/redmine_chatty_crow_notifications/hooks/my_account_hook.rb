@@ -20,6 +20,8 @@ module RedmineChattyCrowNotifications
             res << text_field_tag("user[chatty_crow_channel_settings][#{channel.id}]", user_settings[channel.id])
             res << "</p>"
           end
+
+          res << '</fieldset>'
         end
 
         return res

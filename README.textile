@@ -1,0 +1,11 @@
+!https://avatars1.githubusercontent.com/u/9012750?v=3&s=200!
+
+h1. ChattyCrow - Redmine
+
+!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications
+
+h2. Installation
+
+<pre>
+
+</pre>
