@@ -9,6 +9,8 @@ require_dependency 'user'
 # Settings for user
 module RedmineChattyCrowNotifications
   module Patches
+
+    # Patch user to save chatty crow settings
     module UserPatch
       def self.included(base)
         base.class_eval do
