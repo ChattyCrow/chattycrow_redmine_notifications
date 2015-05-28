@@ -8,13 +8,18 @@
 require 'chatty_crow'
 
 module RedmineChattyCrowNotifications
+  # Parent of all hooks
   module Hooks
+
+    # Notification hook from system / ticket notifications
     class NotifierHook < Redmine::Hook::Listener
 
+      # Redmine url for links
       def redmine_url
         @redmine_url ||= "#{Setting[:protocol]}://#{Setting[:host_name]}"
       end
 
+      # Simple text message contains important informations
       def text_message(type, context)
         issue = context[:issue]
         journal = context[:journal]
@@ -64,6 +69,7 @@ module RedmineChattyCrowNotifications
         text
       end
 
+      # Special slack message
       def slack_message(type, context)
         issue = context[:issue]
         journal = context[:journal]
@@ -136,20 +142,24 @@ module RedmineChattyCrowNotifications
         payload
       end
 
+      # Send through sidekiq?
       def sidekiq?
         defined?(::Sidekiq) && Setting.plugin_redmine_chatty_crow_notifications['sidekiq'] == '1'
       end
 
+      # Hook after save issue
       def controller_issues_new_after_save(context = {})
         deliver :new, context
       end
 
+      # Hook after edit issue
       def controller_issues_edit_after_save(context = {})
         deliver :update, context
       end
 
       private
 
+      # Prepare notifications
       def deliver(type, context)
         # Get message data, this hash is serialized into sidekiq
         # It needs to be a hash

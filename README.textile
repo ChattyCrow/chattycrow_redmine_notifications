@@ -2,7 +2,7 @@
 
 h1. ChattyCrow - Redmine
 
-!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications !http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications.svg?branch=master!:http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications !https://codeclimate.com/repos/556794d56956803ead00051b/badges/f54013fb5f382145d971/gpa.svg!":https://codeclimate.com/repos/556794d56956803ead00051b/feed
+!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications !http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications.svg?branch=master!:http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications !https://codeclimate.com/repos/556794d56956803ead00051b/badges/f54013fb5f382145d971/gpa.svg!:https://codeclimate.com/repos/556794d56956803ead00051b/feed
 
 h2. Installation
 

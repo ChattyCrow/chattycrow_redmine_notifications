@@ -6,6 +6,8 @@
 
 module RedmineChattyCrowNotifications
   module Hooks
+
+    # Notification hook from my account
     class MyAccountHook < Redmine::Hook::ViewListener
       def view_my_account(context = {})
         # Get user

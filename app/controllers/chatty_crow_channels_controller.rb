@@ -11,9 +11,13 @@ class ChattyCrowChannelsController < ApplicationController
   before_filter :find_chatty_crow_channel, only: [:destroy, :edit, :update]
   before_filter :build_chatty_crow_channel_from_params, only: [:new, :create]
 
+  # New channel
+  # GET /new
   def new
   end
 
+  # Create channel
+  # POST /new
   def create
     if @chatty_crow_channel.save
       flash[:notice] = l(:notice_successful_create)
@@ -23,9 +27,13 @@ class ChattyCrowChannelsController < ApplicationController
     end
   end
 
+  # Edit channel
+  # GET /channel/:id/edit
   def edit
   end
 
+  # Update channel
+  # PUT /channel/:id
   def update
     if @chatty_crow_channel.update_attributes(params[:chatty_crow_channel])
       flash[:notice] = l(:notice_successful_create)
@@ -35,6 +43,8 @@ class ChattyCrowChannelsController < ApplicationController
     end
   end
 
+  # Remove channel
+  # DESTROY /channel/:id
   def destroy
     @chatty_crow_channel.destroy
     flash[:notice] = l(:notice_successful_delete)
@@ -43,6 +53,7 @@ class ChattyCrowChannelsController < ApplicationController
 
   private
 
+  # Default redirect
   def redirect_to_plugin_settings
     redirect_to action: :plugin,
                 controller: :settings,
