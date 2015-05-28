@@ -184,11 +184,11 @@ module RedmineChattyCrowNotifications
         # Iterate over users
         User.active.includes(:chatty_crow_user_settings).each do |user|
           # Skip users dont care about issue changes
-          # next if !user.notify_about?(context[:issue])
+          next unless user.notify_about?(context[:issue])
 
           # Find specific channels
           user.chatty_crow_user_settings.each do |user_setting|
-            if user_setting.contact
+            if user_setting.contact.present? && data['channels'][user_setting.chatty_crow_channel_id]
               data['channels'][user_setting.chatty_crow_channel_id]['contacts'] << user_setting.contact
               send = true
             end
