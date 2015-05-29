@@ -8,7 +8,7 @@ h2. Installation
 
 <pre>
 cd readmine_directory/plugins/
-git clone git@github.com:ChattyCrow/chattycrow_redmine_notifications.git
+git clone git@github.com:ChattyCrow/redmine_chatty_crow_notifications.git
 bundle install
 rake redmine:plugins:migrate RAILS_ENV=production
 </pre>
