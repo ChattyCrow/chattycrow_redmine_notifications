@@ -2,13 +2,13 @@
 
 h1. ChattyCrow - Redmine
 
-!https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications.svg!:https://travis-ci.org/ChattyCrow/chattycrow_redmine_notifications !http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications.svg?branch=master!:http://inch-ci.org/github/chattycrow/chattycrow_redmine_notifications !https://codeclimate.com/repos/556794d56956803ead00051b/badges/f54013fb5f382145d971/gpa.svg!:https://codeclimate.com/repos/556794d56956803ead00051b/feed
+!https://travis-ci.org/ChattyCrow/redmine_chatty_crow_notifications.svg?branch=testing!:https://travis-ci.org/ChattyCrow/redmine_chatty_crow_notifications !http://inch-ci.org/github/ChattyCrow/redmine_chatty_crow_notifications.svg?branch=master!:http://inch-ci.org/github/ChattyCrow/redmine_chatty_crow_notifications !https://codeclimate.com/github/ChattyCrow/redmine_chatty_crow_notifications/badges/gpa.svg!:https://codeclimate.com/github/ChattyCrow/redmine_chatty_crow_notifications
 
 h2. Installation
 
 <pre>
 cd readmine_directory/plugins/
-git clone git@github.com:ChattyCrow/chattycrow_redmine_notifications.git
+git clone git@github.com:ChattyCrow/redmine_chatty_crow_notifications.git
 bundle install
 rake redmine:plugins:migrate RAILS_ENV=production
 </pre>
@@ -19,7 +19,7 @@ h2. Features
 
 h3. Sidekiq asynchronous sending
 
-Now you don't have to wait for our servers in redmine main thread, easily add Sidekiq to your redmine project. You can easilly add sidekiq plugin, start it and allow sidekiq in redmine chatty crow notification plugin settings.
+Now you don't have to wait for our servers in redmine main thread, easily add Sidekiq to your redmine project. You can easilly add sidekiq plugin, start it with *chatty_crow* queue and allow sidekiq in redmine chatty crow notification plugin settings.
 
 <pre>
 https://github.com/ogom/redmine_sidekiq
@@ -35,3 +35,5 @@ h3. 0.0.1
 * General settings server and token for notifications
 
 h2. Licence
+
+
