@@ -9,5 +9,5 @@ class ChattyCrowChannel < ActiveRecord::Base
   unloadable
   validates_presence_of :channel_type, :channel_token
   scope :active, lambda { where(active: true) }
-  has_many :chatty_crow_user_settings, dependent: :destroy
+  has_many :chatty_crow_user_settings, dependent: :delete_all
 end
